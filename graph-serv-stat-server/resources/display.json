@@ -1,0 +1,10 @@
+{
+    "host":"host",
+    "uptime":"在线时间",
+    "load":"负载",
+    "network_tx_rx":"网络",
+    "cpu":"cpu",
+    "cpu_percentage":"cpu",
+    "memory_percentage":"内存",
+    "hdd_percentage":"硬盘"
+}

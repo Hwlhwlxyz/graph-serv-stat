@@ -1,0 +1,12 @@
+{
+    "wsserver": "",
+    "servers":
+    [
+        {
+            "host":"127.0.0.1",
+            "name":"localhost_test1",
+            "username": "s01",
+            "password": "some-hard-to-guess-copy-paste-password"
+        }
+    ]
+}
