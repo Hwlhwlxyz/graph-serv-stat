@@ -1,17 +1,23 @@
 import config from "../config.json"  assert { type: "json" };
 
-class serverConfig {
+export class serverConfig {
     host: string;
     name: string;
     // authentication
     username: string;
     password: string;
-    constructor(jsonObjet: any) {
+    jsonObjet: any;
 
+    constructor(jsonObjet: any) {
+        this.jsonObjet = jsonObjet;
         this.host = jsonObjet['host'];
         this.name = jsonObjet['name'];
         this.username = jsonObjet['username'];
         this.password = jsonObjet['password'];
+    }
+
+    get(key: string) {
+        return this.jsonObjet[key];
     }
 
     getUserPassToReceive() {

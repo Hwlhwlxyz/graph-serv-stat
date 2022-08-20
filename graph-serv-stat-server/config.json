@@ -1,10 +1,23 @@
 {
     "wsserver": "",
+    "tableHeader": [
+        "host",
+        "location",
+        "name",
+        "uptime_day",
+        "load",
+        "network_tx_rx_calc",
+        "netio_recv_sent",
+        "cpu_percentage_bar",
+        "memory_percentage_bar",
+        "hdd_percentage_bar"
+    ],
     "servers":
     [
         {
             "host":"127.0.0.1",
             "name":"localhost_test1",
+            "location": "US",
             "username": "s01",
             "password": "some-hard-to-guess-copy-paste-password"
         }

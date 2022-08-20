@@ -7,21 +7,30 @@ import StatusRowRender from "../ui-components/StatusRowRender.tsx";
 import display from "../resources/display.json" assert { type: "json" };
 import config from "../config.json" assert { type: "json" };
 import serverConfiguration from "../models/config.ts";
+import DetailRow from "../ui-components/DetailRow.tsx";
+
 
 interface statusTable {
   host: string;
   value: any; // {"load": 0.02, "memory_used": 391080, "uptime": 28248919, "online0": false, "swap_total": 524284, "swap_used": 246776, "memory_total": 494800, "network_tx": 0, "hdd_used": 6658, "network_rx": 80, "cpu": 0.0, "hdd_total": 9513}
 }
 
-const tableHead = [
+const defaultTableHead = [
   "host",
-  "uptime",
+  "name",
+  "uptime_day",
   "load",
-  "network_tx_rx",
+  "network_tx_rx_calc",
+  "netio_recv_sent",
+  "cpu_percentage_bar",
+  "memory_percentage_bar",
+  "hdd_percentage_bar",
+];
 
-  "cpu_percentage",
-  "hdd_percentage",
-  "memory_percentage",
+const detailKeys = [
+  "memory",
+  "swap",
+  "hdd"
 ];
 
 export default function ServerStatusTable() {
@@ -30,61 +39,48 @@ export default function ServerStatusTable() {
     new Map()
   );
 
-  const [expandMap, setExpandMap] = useState<Map<string, boolean>>(
-    new Map()
-  );
+  const [expandMap, setExpandMap] = useState<Map<string, boolean>>(new Map());
 
   useEffect(() => {
     // for test only
     // updateMap("test", new statusData("test", {"load": 0.02, "memory_used": 391080, "uptime": 28248919, "online0": false, "swap_total": 524284, "swap_used": 246776, "memory_total": 494800, "network_tx": 0, "hdd_used": 6658, "network_rx": 80, "cpu": 0.0, "hdd_total": 9513}))
-    for (const key of serverConfiguration.serversMap.keys()) {
-      updateMap(key, new statusData(key, {}));
+    for (const [key, value] of serverConfiguration.serversMap) {
+      updateMap(key, new statusData(key, {}, value));
     }
   }, []);
-  const head = tableHead;
-  // [
-  //   "host",
 
-  //   "load",
-  //   "memory_used",
-  //   "uptime",
-  //   "online0",
-  //   "swap_total",
-  //   "swap_used",
-  //   "memory_total",
-  //   "network_tx",
-  //   "hdd_used",
-  //   "network_rx",
-  //   "cpu",
-  //   "hdd_total",
-  // ]
+  let head = defaultTableHead;
+  if (config!=undefined && Array.isArray(config.tableHeader) && config.tableHeader.length>0) {
+    head = config.tableHeader;
+  }
+
+  
 
   const [body, setBody] = useState<(number | boolean | string)[][]>([]);
 
   const ws = useRef<WebSocket | null>(null);
 
-  const [message, setMessage] = useState("");
-  
+
   useLayoutEffect(() => {
-    console.log("window.location.href:",window)
-    console.log("window.location.href:",window.location.href, window.location.origin)
+    console.log("window.location.href:", window);
+    console.log(
+      "window.location.href:",
+      window.location.href,
+      window.location.origin
+    );
     const urlObject = new URL(window.location.origin);
-    console.log(urlObject.host)
-    if (config.wsserver!=null && config.wsserver.length>0) {
+    console.log(urlObject.host);
+    if (config.wsserver != null && config.wsserver.length > 0) {
       ws.current = new WebSocket(config.wsserver);
-    }
-    else {
+    } else {
       ws.current = new WebSocket(`ws://${urlObject.host}/ws`);
     }
-    
 
     ws.current.onopen = (e) => {
       ws.current?.send("frontend");
     };
 
     ws.current.onmessage = (e) => {
-      setMessage(e.data);
-      console.log("59:", e.data);
       let j = null;
       try {
         j = JSON.parse(e.data);
@@ -95,7 +91,11 @@ export default function ServerStatusTable() {
       if (j != null && j["status"] != null) {
         console.log("j:", j);
         const host = j["host"];
-        const receivedData = new statusData(host, j["status"]);
+        const receivedData = new statusData(
+          host,
+          j["status"],
+          serverConfiguration.serversMap.get(host)
+        );
         console.log(receivedData);
         // statusMap.set(host, receivedData);
         // setStatusMap(new Map(statusMap));
@@ -119,54 +119,55 @@ export default function ServerStatusTable() {
   };
 
   function onclickOneRow(host: string) {
-    console.log("111 host:",host)
     const oldValue = expandMap.get(host) || false;
     setExpandMap(new Map(expandMap.set(host, !oldValue)));
   }
-    
+
   const tableClass = `w-full text-sm text-left text-gray-700 dark:text-gray-400`;
   const theadClass = `text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400`;
-  const tbodytrClass = `bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600`;
+  const tbodytrClass = `bg-white border-b text-center dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600`;
   const rowtdClass = `border py-4 px-6`;
-  const thClass = `border py-3 px-6`;
+  const thClass = `border py-3 px-6 text-center`;
 
   const tdShow = {
-    'opacity': '1',
-    'padding': '10px',
-    'line-height': '20px',
-    'transition': 'all 0.1s ease-in-out'
-  }
+    opacity: "1",
+    padding: "10px",
+    "line-height": "20px",
+    transition: "all 0.1s ease-in-out",
+  };
 
   const tdHide = {
-    'opacity': '0',
-    'line-height': '0px',
-    'padding': '0 0px'
-  }
+    opacity: "0",
+    "line-height": "0px",
+    padding: "0 0px",
+  };
 
-  function getDetailedtbodytrClass(host: string) {
-    console.log(expandMap)
+  function getDetailedtbodytrClass(host: string, statusdata: statusData) {
+    console.log(expandMap);
     if (expandMap.get(host)) {
       return (
         <tr class={tw`tbodytrClass`}>
-                  <td colSpan={head.length} class={tw`${rowtdClass}`} style={tdShow}> Details </td>
+          <td colSpan={head.length} class={tw`${rowtdClass}`} style={tdShow}>
+            {DetailRow(detailKeys, statusdata)}
+          </td>
         </tr>
       );
-    }
-    else {
+    } else {
       return (
         <tr class={tw`tbodytrClass`}>
-                  <td colSpan={head.length} class={tw`${rowtdClass}`} style={tdHide}> Details </td>
+          <td colSpan={head.length} class={tw`${rowtdClass}`} style={tdHide}>
+            {" "}
+            Details not found
+          </td>
         </tr>
       );
     }
   }
 
-
-
-
-
   return (
-    <div class={tw`overflow-x-auto overflow-y-hidden relative shadow-md sm:rounded-lg border-2`}>
+    <div
+      class={tw`overflow-x-auto overflow-y-hidden relative shadow-md sm:rounded-lg border-2`}
+    >
       <table class={tw`${tableClass}`}>
         <thead class={tw`${theadClass}`}>
           <tr>
@@ -184,10 +185,17 @@ export default function ServerStatusTable() {
           {[...statusMap.keys()].map((host) => {
             if (statusMap.get(host) != undefined) {
               return [
-                <tr class={tw`${tbodytrClass}`} onClick={()=>onclickOneRow(host)}>
+                <tr
+                  key={host}
+                  class={tw`${tbodytrClass}`}
+                  onClick={() => onclickOneRow(host)}
+                >
                   {StatusRowRender(head, statusMap.get(host) as statusData)}
                 </tr>,
-                getDetailedtbodytrClass(host)
+                getDetailedtbodytrClass(
+                  host,
+                  statusMap.get(host) as statusData
+                ),
               ];
             } else {
               return (
@@ -202,4 +210,3 @@ export default function ServerStatusTable() {
     </div>
   );
 }
-

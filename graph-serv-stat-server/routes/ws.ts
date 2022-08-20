@@ -13,7 +13,7 @@ let localSocket: WebSocket | null = null;
 
 
 function sendToLocalhost(e: MessageEvent, localSocket: WebSocket | null, origin: string) {
-  if (localSocket) { // send to localSocket(frontend) if localSocket is connected
+  if (localSocket && localSocket.readyState==1) { // send to localSocket(frontend) if localSocket is connected
     let statusData = null;
     try {
       statusData = JSON.parse(e.data);

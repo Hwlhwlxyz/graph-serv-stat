@@ -1,10 +1,27 @@
 {
     "host":"host",
     "uptime":"在线时间",
+    "uptime_day":"在线时间",
+    "uptime_day_unit": "天",
     "load":"负载",
     "network_tx_rx":"网络",
+    "network_tx_rx_calc":"网络",
     "cpu":"cpu",
     "cpu_percentage":"cpu",
+    "cpu_percentage_bar":"cpu",
     "memory_percentage":"内存",
-    "hdd_percentage":"硬盘"
+    "memory_percentage_bar":"内存",
+    "hdd_percentage":"硬盘",
+    "hdd_percentage_bar": "硬盘",
+    "netio_recv": "",
+    "netio_sent": "",
+    "netio_recv_sent": "流量",
+    "swap_total": "交换分区总量", 
+    "swap_used": "交换分区使用",
+    "memory": "内存",
+    "swap": "交换分区",
+    "hdd": "硬盘",
+
+    "name": "主机名",
+    "location": "位置"
 }
