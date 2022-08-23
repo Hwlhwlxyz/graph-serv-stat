@@ -9,7 +9,7 @@ import manifest from "./fresh.gen.ts";
 
 import { config, setup } from "@twind";
 import { virtualSheet } from "twind/sheets";
-
+import projectconfig from "./config.json"  assert { type: "json" };
 
 
 const sheet = virtualSheet();
@@ -26,4 +26,11 @@ function render(ctx: RenderContext, render: InnerRenderFunction) {
   ctx.state.set("twind", newSnapshot);
 }
 
-await start(manifest, {port: 8000, render });
+let port;
+if (Number.isInteger(projectconfig.port)) {
+  port = parseInt(projectconfig.port);
+}
+else {
+  port = 8000;
+}
+await start(manifest, {port: port, render });

@@ -79,7 +79,7 @@ export const handler: Handlers = {
         }
         else {
           // communicate with frontend
-          if (localSocket==null && e.data == 'frontend') {
+          if (e.data == 'frontend') {
             localSocket = socket;
             console.log("localSocket connected")
           }
