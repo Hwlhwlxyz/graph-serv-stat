@@ -98,6 +98,10 @@ def get_network(ip_version):
 		pass
 	return False
 
+def get_net_io():
+	netio = psutil.net_io_counters()
+	return netio.bytes_recv, netio.bytes_sent 
+
 def get_data():
 	traffic = Traffic()
 	CPU = get_cpu()
@@ -126,6 +130,7 @@ def get_data():
 	array['cpu'] = CPU
 	array['network_rx'] = NetRx
 	array['network_tx'] = NetTx
+	array['netio_recv'], array['netio_sent'] = get_net_io()
 	return json.dumps(array)
 
 def on_message(ws, message):
