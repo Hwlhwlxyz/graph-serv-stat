@@ -73,7 +73,15 @@ export default function ServerStatusTable() {
     if (config.wsserver != null && config.wsserver.length > 0) {
       ws.current = new WebSocket(config.wsserver);
     } else {
-      ws.current = new WebSocket(`ws://${urlObject.host}/ws`);
+      console.log(`ws:${window.location.href.substring(window.location.protocol.length)}/ws`)
+      let pathWithSlash;
+      if (urlObject.pathname.endsWith('/')) {
+        pathWithSlash = urlObject.pathname;
+      }
+      else {
+        pathWithSlash = urlObject.pathname+'/';
+      }
+      ws.current = new WebSocket(`ws://${urlObject.host}${pathWithSlash}/ws`);
     }
 
     ws.current.onopen = (e) => {
