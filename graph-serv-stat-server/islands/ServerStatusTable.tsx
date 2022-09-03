@@ -81,7 +81,7 @@ export default function ServerStatusTable() {
       else {
         pathWithSlash = urlObject.pathname+'/';
       }
-      ws.current = new WebSocket(`ws://${urlObject.host}${pathWithSlash}/ws`);
+      ws.current = new WebSocket(`ws://${urlObject.host}${pathWithSlash}ws`);
     }
 
     ws.current.onopen = (e) => {
