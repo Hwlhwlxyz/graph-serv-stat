@@ -4,6 +4,7 @@
 
 import * as $0 from "./routes/index.tsx";
 import * as $1 from "./routes/ws.ts";
+import * as $2 from "./routes/wsfrontend.ts";
 import * as $$0 from "./islands/ChartDisplay.tsx";
 import * as $$1 from "./islands/Clock.tsx";
 import * as $$2 from "./islands/Counter.tsx";
@@ -13,6 +14,7 @@ const manifest = {
   routes: {
     "./routes/index.tsx": $0,
     "./routes/ws.ts": $1,
+    "./routes/wsfrontend.ts": $2,
   },
   islands: {
     "./islands/ChartDisplay.tsx": $$0,
