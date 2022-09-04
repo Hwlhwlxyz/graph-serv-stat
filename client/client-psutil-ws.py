@@ -172,9 +172,9 @@ if __name__ == '__main__':
 		thread.start()
 
 		rel.dispatch()
-	except error:
+	except Exception as error:
 		print(error)
 
 	finally:
 		print("end")
-		ws.close();
+		ws.close()

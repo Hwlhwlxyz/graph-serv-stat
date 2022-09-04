@@ -16,18 +16,18 @@ function getRemoteAddress(connInfoRemoteAddr: any) {
 export const handler: Handlers = {
   GET(req: Request, connInfo: ConnInfo) {
     console.log(connInfo);
-    let first3SocketMessages = [];
+    const first3SocketMessages = [];
     let authenticated = false;
     const remoteAddress = getRemoteAddress(connInfo.remoteAddr);
     if (req.headers.get("upgrade") == "websocket") {
       console.log(req.headers.get("host"));
 
-      let serverCfg = serverConfiguration.getConfigByHost(remoteAddress);
+      const serverCfg = serverConfiguration.getConfigByHost(remoteAddress);
       if (serverCfg) {
         console.log(
           remoteAddress,
           "serverCfg",
-          serverCfg?.needAuth,
+          serverCfg?.needAuth(),
           serverCfg?.getUserPassToReceive()
         );
       } else {
