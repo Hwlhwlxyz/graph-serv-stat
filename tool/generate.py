@@ -91,13 +91,18 @@ def apply_args(args):
                 host=args.host,
                 destination=args.destination_path
                 )
-        print(cmd_str)
+        mkdir_str = 'ssh -p {port} {username}@{host} "mkdir -p {destination}"'.format(
+                port=args.port, 
+                username=args.username,
+                host=args.host,
+                destination=args.destination_path
+                )
         print('create client.py, name is:', client_py_name)
         create_client_py(str(id), password)
         print('start to transfer')
-        input_str = input('transfer? will run command:'+cmd_str+' (yes/no) : ')
+        input_str = input('transfer? will run command:'+mkdir_str +'&&'+ cmd_str+' (yes/no) : ')
         if input_str.lower().startswith('y'):
-            run_command(cmd_str)
+            run_command(mkdir_str +'&&'+ cmd_str)
         else:
             print('terminated')
     else:
