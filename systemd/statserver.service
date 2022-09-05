@@ -1,0 +1,14 @@
+[Unit]
+Description=Stat Server Service # /etc/systemd/system/statserver.service
+After=network.target
+
+[Service]
+Type=simple
+User=username # change to your username
+Restart=on-failure
+RestartSec=1s
+WorkingDirectory=/path/to/graph-serv-stat-server/
+ExecStart=/root/.deno/bin/deno /path/to/graph-serv-stat-server/main.ts # change to your deno path (whereis deno), and the project path
+
+[Install]
+WantedBy=multi-user.target
