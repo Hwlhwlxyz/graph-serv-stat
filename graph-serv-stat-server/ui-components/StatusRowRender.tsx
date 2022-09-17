@@ -6,6 +6,7 @@ import { tw } from "@twind";
 import { statusData } from "../models/statusData.ts";
 import display from "../resources/display.json" assert { type: "json" };
 import ProgressBar from "./ProgressBar.tsx";
+import CountDownCircle from "../islands/CountDownCircle.tsx";
 
 export default function StatusRowRender(head: string[], data: statusData) {
     const rowtdClass = `border py-4 px-6 text-rose-600`;
@@ -39,6 +40,11 @@ function cellRender(key: string, data: statusData) {
             return  (data.get("cpu_percentage")? <ProgressBar percentNumber={parseFloat((data.get("cpu_percentage") as number).toFixed(1))} toFixed={1} />:undefined)
         case "uptime_day":
             return data.get(key) as number + display.uptime_day_unit;
+        case "last_connection_time":
+            console.log("last_connection_time",data, typeof data.updateTime)
+            return (typeof data.updateTime === 'undefined' || data==null) ? "not updated" : data.updateTime.toISOString(); 
+        case "countdown_circle":
+            return (typeof data.updateTime === 'undefined' || data==null) ? "": <CountDownCircle key={data.updateTime.getTime()} lastUpdateTimestamp={(data.updateTime.getTime())}/>
         default:
             return data.get(key);
     }

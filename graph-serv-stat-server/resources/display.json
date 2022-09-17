@@ -21,6 +21,8 @@
     "memory": "内存",
     "swap": "交换分区",
     "hdd": "硬盘",
+    "last_connection_time": "上次连接",
+    "countdown_circle": "连接",
 
     "name": "主机名",
     "location": "位置",

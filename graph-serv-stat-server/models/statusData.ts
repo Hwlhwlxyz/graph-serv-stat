@@ -18,9 +18,12 @@ export class statusData {
     netio_recv: number;
     netio_sent: number;
 
+    updateTime: Date|undefined = undefined;
+
 
     constructor(host: string, receiveObject: any, serverconfig: serverConfig | undefined) {
         this.serverconfig = serverconfig;
+        
 
         this.host = host;
         this.load = receiveObject['load']
@@ -37,6 +40,11 @@ export class statusData {
         this.hdd_total = receiveObject['hdd_total']
         this.netio_sent = receiveObject['netio_sent']
         this.netio_recv = receiveObject['netio_recv']
+
+        if (!Number.isNaN(this.load)) { // check whether the receiveObject is from remote machine (set by value get from websocket)
+            this.updateTime = new Date();
+        }
+        
     }
 
     toArray() {

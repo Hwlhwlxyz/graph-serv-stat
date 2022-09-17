@@ -7,8 +7,9 @@ import * as $1 from "./routes/ws.ts";
 import * as $2 from "./routes/wsfrontend.ts";
 import * as $$0 from "./islands/ChartDisplay.tsx";
 import * as $$1 from "./islands/Clock.tsx";
-import * as $$2 from "./islands/Counter.tsx";
-import * as $$3 from "./islands/ServerStatusTable.tsx";
+import * as $$2 from "./islands/CountDownCircle.tsx";
+import * as $$3 from "./islands/Counter.tsx";
+import * as $$4 from "./islands/ServerStatusTable.tsx";
 
 const manifest = {
   routes: {
@@ -19,8 +20,9 @@ const manifest = {
   islands: {
     "./islands/ChartDisplay.tsx": $$0,
     "./islands/Clock.tsx": $$1,
-    "./islands/Counter.tsx": $$2,
-    "./islands/ServerStatusTable.tsx": $$3,
+    "./islands/CountDownCircle.tsx": $$2,
+    "./islands/Counter.tsx": $$3,
+    "./islands/ServerStatusTable.tsx": $$4,
   },
   baseUrl: import.meta.url,
 };

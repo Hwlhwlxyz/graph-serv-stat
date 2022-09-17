@@ -25,6 +25,7 @@ const defaultTableHead = [
   "cpu_percentage_bar",
   "memory_percentage_bar",
   "hdd_percentage_bar",
+  "countdown_circle"
 ];
 
 const detailKeys = [
@@ -45,7 +46,21 @@ export default function ServerStatusTable() {
     // for test only
     // updateMap("test", new statusData("test", {"load": 0.02, "memory_used": 391080, "uptime": 28248919, "online0": false, "swap_total": 524284, "swap_used": 246776, "memory_total": 494800, "network_tx": 0, "hdd_used": 6658, "network_rx": 80, "cpu": 0.0, "hdd_total": 9513}))
     for (const [key, value] of serverConfiguration.serversMap) {
-      updateMap(key, new statusData(key, {}, value));
+      updateMap(key, new statusData(key, {
+        load: NaN,
+        memory_used: NaN,
+        uptime: NaN,
+        online0: false,
+        swap_total: NaN,
+        swap_used: NaN,
+        memory_total: NaN,
+        network_tx: NaN,
+        hdd_used: NaN,
+        network_rx: NaN,
+        cpu: NaN,
+        hdd_total: NaN,
+        netio_recv: NaN,
+        netio_sent: NaN}, value));
     }
   }, []);
 
@@ -81,7 +96,13 @@ export default function ServerStatusTable() {
       else {
         pathWithSlash = urlObject.pathname+'/';
       }
-      ws.current = new WebSocket(`ws://${urlObject.host}${pathWithSlash}wsfrontend`);
+      if (location.protocol === 'https:') {
+        ws.current = new WebSocket(`wss://${urlObject.host}${pathWithSlash}wsfrontend`);
+      }
+      else {
+        ws.current = new WebSocket(`ws://${urlObject.host}${pathWithSlash}wsfrontend`);
+      }
+      
     }
 
     ws.current.onopen = (e) => {
@@ -104,17 +125,17 @@ export default function ServerStatusTable() {
           j["status"],
           serverConfiguration.serversMap.get(host)
         );
-        console.log(receivedData);
+        // console.log(receivedData);
         // statusMap.set(host, receivedData);
         // setStatusMap(new Map(statusMap));
         updateMap(host, receivedData);
         let newBody: (number | boolean | string)[][] = [];
         for (const [key, value] of statusMap) {
-          console.log(key, value);
+          // console.log(key, value);
           newBody.push(value.toArray());
         }
         setBody(newBody);
-        console.log("statusMap", statusMap);
+        // console.log("statusMap", statusMap);
       }
     };
     return () => {
@@ -164,8 +185,8 @@ export default function ServerStatusTable() {
       return (
         <tr class={tw`tbodytrClass`}>
           <td colSpan={head.length} class={tw`${rowtdClass}`} style={tdHide}>
-            {" "}
-            Details not found
+            {" Details not found "}
+            
           </td>
         </tr>
       );

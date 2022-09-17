@@ -11,7 +11,8 @@
         "netio_recv_sent",
         "cpu_percentage_bar",
         "memory_percentage_bar",
-        "hdd_percentage_bar"
+        "hdd_percentage_bar",
+        "countdown_circle"
     ],
     "servers":
     [

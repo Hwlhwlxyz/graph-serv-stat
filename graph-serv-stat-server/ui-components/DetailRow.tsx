@@ -5,13 +5,18 @@ import { bytesToSize, statusData } from "../models/statusData.ts";
 import display from "../resources/display.json" assert { type: "json" };
 
 export default function DetailRow(keys: string[], data: statusData) {
+  console.log("DetailRow", data)
+
   const rowtdClass = `py-2 px-6 text-center`;
   const rowContent = [];
   const keyArray = keys.map((s) => s as keyof typeof data);
-  for (const k of keyArray) {
-    rowContent.push(<p class={tw`${rowtdClass}`}>{detailRender(k, data)}</p>);
-  }
-  console.log(keys, rowContent)
+  
+    for (const k of keyArray) {
+      rowContent.push(<p class={tw`${rowtdClass}`}>{detailRender(k, data)}</p>);
+    }
+    console.log(keys, rowContent)
+  
+
   return rowContent;
 }
 
