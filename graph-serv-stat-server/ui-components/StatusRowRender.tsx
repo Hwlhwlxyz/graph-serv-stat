@@ -44,7 +44,7 @@ function cellRender(key: string, data: statusData) {
             console.log("last_connection_time",data, typeof data.updateTime)
             return (typeof data.updateTime === 'undefined' || data==null) ? "not updated" : data.updateTime.toISOString(); 
         case "countdown_circle":
-            return (typeof data.updateTime === 'undefined' || data==null) ? "": <CountDownCircle key={data.updateTime.getTime()} lastUpdateTimestamp={(data.updateTime.getTime())}/>
+            return (typeof data.updateTime === 'undefined' || data==null) ? "": <CountDownCircle key={data.host+data.updateTime.getTime().toString()} lastUpdateTimestamp={(data.updateTime.getTime())}/>
         default:
             return data.get(key);
     }

@@ -31,11 +31,11 @@ def get_memory():
 		MemUsed = Mem.total - (Mem.cached + Mem.free)
 	except:
 		MemUsed = Mem.total - Mem.free
-	return int(Mem.total/1024.0), int(MemUsed/1024.0)
+	return int(Mem.total), int(MemUsed)
 
 def get_swap():
 	Mem = psutil.swap_memory()
-	return int(Mem.total/1024.0), int(Mem.used/1024.0)
+	return int(Mem.total), int(Mem.used)
 
 def get_hdd():
 	valid_fs = [ "ext4", "ext3", "ext2", "reiserfs", "jfs", "btrfs", "fuseblk", "zfs", "simfs", "ntfs", "fat32", "exfat", "xfs" ]
@@ -49,7 +49,7 @@ def get_hdd():
 		usage = psutil.disk_usage(disk)
 		size += usage.total
 		used += usage.used
-	return int(size/1024.0/1024.0), int(used/1024.0/1024.0)
+	return int(size), int(used)
 
 def get_load():
 	try:

@@ -115,3 +115,4 @@ def run_command(cmd_str):
 
 if __name__ == '__main__':
     apply_args(args)
+
