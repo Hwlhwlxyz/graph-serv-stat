@@ -1,4 +1,3 @@
-/** @jsx h */
 import { Handlers } from "$fresh/server.ts";
 import serverConfiguration from "../models/config.ts";
 import { ConnInfo } from "https://deno.land/x/fresh@1.0.2/src/server/deps.ts";

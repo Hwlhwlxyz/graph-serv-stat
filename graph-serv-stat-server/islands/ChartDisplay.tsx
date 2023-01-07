@@ -1,8 +1,6 @@
-/** @jsx h */
-import { h } from "preact";
 import { useEffect, useState } from "preact/hooks";
 import { IS_BROWSER } from "$fresh/runtime.ts";
-import { tw } from "@twind";
+import { tw } from "twind";
 import {Chart, ChartConfiguration, ChartItem, ChartTypeRegistry, ChartType, registerables  } from "https://esm.sh/chart.js@3.8.2"
 
 interface ChartProps {
@@ -57,9 +55,9 @@ export default function ChartDisplay(props: ChartProps) {
   })
 
   return (
-    <div class={tw`flex gap-2 w-full`}>
+    <div class="flex gap-2 w-full">
       
-      <div class={tw`mx-auto max-w-screen-xl`} style="width:100%">
+      <div class="mx-auto max-w-screen-xl" style="width:100%">
       <canvas id="myChart9" ></canvas>
   
     </div>

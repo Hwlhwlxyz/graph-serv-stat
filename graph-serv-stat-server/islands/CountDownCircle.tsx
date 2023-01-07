@@ -1,9 +1,5 @@
-/** @jsx h */
-import { h } from "preact";
-
 import { useEffect, useState } from "preact/hooks";
 import { IS_BROWSER } from "$fresh/runtime.ts";
-import { tw } from "@twind";
 import { css } from 'twind/css'
 import { style } from "twind/style";
 import { statusData } from "../models/statusData.ts";

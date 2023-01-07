@@ -1,8 +1,6 @@
-/** @jsx h */
-import { h } from "preact";
 import { useState } from "preact/hooks";
 import { IS_BROWSER } from "$fresh/runtime.ts";
-import { tw } from "@twind";
+import { tw } from "twind";
 import { style } from "twind/style";
 import { statusData } from "../models/statusData.ts";
 
@@ -38,7 +36,7 @@ export default function ProgressBar(props: progressbarProps) {
 
   return (
     <div>
-      <div class={tw`w-full bg-gray-200 rounded-full`}>
+      <div class="w-full bg-gray-200 rounded-full">
         <div class={displayClass} style={`width: ${props.percentNumber}%`}>
           {toFixNumber(props.percentNumber)}%
         </div>

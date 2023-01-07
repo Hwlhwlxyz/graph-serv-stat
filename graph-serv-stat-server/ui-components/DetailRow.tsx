@@ -1,6 +1,4 @@
-/** @jsx h */
-import { h } from "preact";
-import { tw } from "@twind";
+import { tw } from "twind";
 import { bytesToSize, statusData } from "../models/statusData.ts";
 import display from "../resources/display.json" assert { type: "json" };
 

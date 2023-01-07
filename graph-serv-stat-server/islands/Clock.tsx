@@ -1,10 +1,5 @@
-/** @jsx h */
-import { h } from "preact";
 import { useEffect, useState } from "preact/hooks";
 import { IS_BROWSER } from "$fresh/runtime.ts";
-import { tw } from "@twind";
-
-
 
 export default function Clock() {
 
@@ -22,7 +17,7 @@ export default function Clock() {
     }, []);  
     
   return (
-    <div class={tw`flex gap-2 w-full`}>
+    <div class="flex gap-2 w-full">
       <span>
         {date.toLocaleTimeString()}
       </span>

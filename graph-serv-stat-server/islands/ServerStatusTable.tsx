@@ -1,7 +1,5 @@
-/** @jsx h */
-import { h } from "preact";
 import { useEffect, useRef, useState, useLayoutEffect } from "preact/hooks";
-import { tw } from "@twind";
+import { tw } from "twind";
 import { statusData } from "../models/statusData.ts";
 import StatusRowRender from "../ui-components/StatusRowRender.tsx";
 import display from "../resources/display.json" assert { type: "json" };
@@ -175,7 +173,7 @@ export default function ServerStatusTable() {
     console.log(expandMap);
     if (expandMap.get(host)) {
       return (
-        <tr class={tw`tbodytrClass`}>
+        <tr class="tbodytrClass">
           <td colSpan={head.length} class={tw`${rowtdClass}`} style={tdShow}>
             {DetailRow(detailKeys, statusdata)}
           </td>
@@ -183,7 +181,7 @@ export default function ServerStatusTable() {
       );
     } else {
       return (
-        <tr class={tw`tbodytrClass`}>
+        <tr class="tbodytrClass">
           <td colSpan={head.length} class={tw`${rowtdClass}`} style={tdHide}>
             {" Details not found "}
             
@@ -195,7 +193,7 @@ export default function ServerStatusTable() {
 
   return (
     <div
-      class={tw`overflow-x-auto overflow-y-hidden relative shadow-md sm:rounded-lg border-2`}
+      class="overflow-x-auto overflow-y-hidden relative shadow-md sm:rounded-lg border-2"
     >
       <table class={tw`${tableClass}`}>
         <thead class={tw`${theadClass}`}>

@@ -1,8 +1,6 @@
-/** @jsx h */
-import { h } from "preact";
 import { useState } from "preact/hooks";
 import { IS_BROWSER } from "$fresh/runtime.ts";
-import { tw } from "@twind";
+import { tw } from "twind";
 import { statusData } from "../models/statusData.ts";
 import display from "../resources/display.json" assert { type: "json" };
 import ProgressBar from "./ProgressBar.tsx";

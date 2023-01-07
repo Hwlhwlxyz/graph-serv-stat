@@ -1,4 +1,3 @@
-/** @jsx h */
 import { Handlers } from "$fresh/server.ts";
 import { db } from "../database/sqlite.ts";
 import { statusMessage } from "../models/statusMessage.ts";
